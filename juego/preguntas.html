@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Juego de Preguntas</title>
+    <style>
+
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50%; /* 100% del viewport height */
+        }
+        .content {
+            text-align: center; /* Centrar contenido interno */
+            background-color: lightblue;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        label{
+            font-size: 20px;
+            font-weight:bold ;
+        }
+        .question {
+            margin-bottom: 20px;
+           
+           
+        }
+        .question input, .question select {
+            display: block;
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .correct {
+            background-color: lightgreen;
+        }
+        .incorrect {
+            background-color: lightcoral;
+        }
+        button {
+            background-color: gold;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgoldenrod;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="conteiner">
+        <div class="content">
+        <audio id="audioaa" src="WhatsApp-Audio-2024-07-19-at-1.44.43-PM.mp3" type="audio/mp3" ></audio>
+
+
+    <h1 style="text-align: center;">¿cuanto sabes de cultura general?</h1>
+    <div id="countdown" style="color: green;">1:00</div>
+
+    <div id="questions">
+        <div class="question">
+            <label>1. ¿como se escribe ayudame en ingles?</label>
+            <select id="q1">
+                <option value="Help me">Help me</option>
+                <option value="John Smith">House</option>
+                <option value="Cristian">hep me</option>
+                <option value="Camilo">horizont</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>2. ¿Cual es nombre completo de James?</label>
+            <select id="q2">
+                <option value="Juan guillermo Rodigez James">Juan guillermo Rodigez James</option>
+                <option value="Juan James Rodriguez.">Juan James Rodriguez.</option>
+                <option value="James David Rodríguez Rubio.">James David Rodríguez Rubio.</option>
+                <option value="James Rodriguez.">James Rodriguez.</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>3. ¿Como se llama el creador de Dragon Ball Z?</label>
+            <select id="q3">
+                <option value="Eiichiro Oda">Eiichiro Oda</option>
+                <option value="Gosho Aoyama">Gosho Aoyama</option>
+                <option value="Akira Toriyama">Akira Toriyama</option>
+                <option value="Masashi Kishimoto">Masashi Kishimoto</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>4. ¿Cual es el simbolo del Fosforo en la tabla periodica?</label>
+            <select id="q4">
+                <option value="Cr">Cr</option>
+                <option value="Sc">Sc</option>
+                <option value="Rf">Rf</option>
+                <option value="P">P</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>5. ¿En que año el hombre fue a la luna?</label>
+            <select id="q5">
+                <option value="1526">1526</option>
+                <option value="1968">1968</option>
+                <option value="1789">1789</option>
+                <option value="1969">1969</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>6. ¿Cual es el pais con menos poblacion?</label>
+            <select id="q6">
+                <option value="">Selecciona una opción</option>
+                <option value="America">America</option>
+                <option value="Japon">Japon</option>
+                <option value="Vaticano">Vaticano</option>
+                <option value="Colombia">Colombia</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>7. ¿Cuanto es 48*2?</label>
+            <select id="q7">
+                <option value="">Selecciona una opción</option>
+                <option value="587">587</option>
+                <option value="96">96</option>
+                <option value="78">78</option>
+                <option value="74">74</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>8. ¿A que edad murio Diomedes Diaz?</label>
+            <select id="q8">
+                <option value="">Selecciona una opción</option>
+                <option value="50 años">50 años</option>
+                <option value="40 años">40 años</option>
+                <option value="56 años">56 años</option>
+                <option value="74 años">74 años</option>
+            </select>
+        </div>
+        <div class="question">
+            <label>9. Escribe bien</label>
+            <input type="text" id="q9">
+        </div>
+        <div class="question">
+            <label>10. Adivina el numero que estoy pensando</label>
+            <input type="text" id="q10">
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <button onclick="clearAnswers()">Eliminar Respuestas</button>
+        <button onclick="submitAnswers()">Enviar Respuestas</button>
+    </div>
+
+    <script>
+        var timeLeft = 60;
+        var countdownElement = document.getElementById('countdown');
+        var countdownTimer = setInterval(function() {
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft %60;
+            let audio = document.getElementById('audioaa');
+            
+            countdownElement.innerHTML = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            countdownElement.style.color = timeLeft > 0 ? 'green' : 'red';
+            timeLeft--;
+            if (timeLeft < 0) {
+            clearInterval(countdownTimer);
+            alert("Se acabó el tiempo, vuelve a intentarlo");
+            audio.play()
+            
+            countdownElement.style.color = 'red';
+        }
+    }, 1000);
+        
+        var correctAnswers = {
+            q1: 'Help me',
+            q2: 'James David Rodríguez Rubio.',
+            q3: 'Akira Toriyama',
+            q4: 'P',
+            q5: '1969',
+            q6: 'Vaticano',
+            q7: '96',
+            q8: '56 años',
+            q9: 'bien',
+            q10: '7'
+        };
+       
+        function clearAnswers() {
+            for (let i = 1; i <= 10; i++) {
+                let input = document.getElementById('q' + i);
+                let select = document.getElementById('q' + i);
+                if (input) {
+                    input.value = '';
+                    input.classList.remove('correct', 'incorrect');
+                }
+                if (select) {
+                    select.selectedIndex = 0;
+                    select.classList.remove('correct', 'incorrect');
+                }
+            }
+        }
+
+        function submitAnswers() {
+            clearInterval(countdownTimer);
+            for (var i = 1; i <= 10; i++) {
+                let input = document.getElementById('q' + i);
+                let select = document.getElementById('q' + i);
+                let answer = input ? input.value.trim() : '';
+                let selectedAnswer = select ? select.value.trim() : '';
+
+                if (input) {
+                    if (answer.toLowerCase() === correctAnswers['q' + i].toLowerCase()) {
+                        input.classList.add('correct');
+                    } else {
+                        input.classList.add('incorrect');
+                    }
+                }
+
+                if (select) {
+                    if (selectedAnswer.toLowerCase() === correctAnswers['q' + i].toLowerCase()) {
+                        select.classList.add('correct');
+                    } else {
+                        select.classList.add('incorrect');
+                    }
+                }
+            }
+        }
+    </script>
+    </div>
+    </div>
+    
+    
+</body>
+</html>
